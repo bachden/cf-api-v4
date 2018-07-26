@@ -13,7 +13,7 @@ public class TestAccessRule {
 			final CloudFlareFuture future;
 
 			// future = cloudFlareApi.blockAnIp("139.99.121.146");
-			future = cloudFlareApi.unblockAnIp("1a9f5abdd92b43caa4f7faf6671ad31d");
+			future = cloudFlareApi.unblockAnIp("202d1d37209945bcbb69a32454cdd7cb");
 
 			CloudFlareResponse response = future.get();
 			if (response != null) {
@@ -26,14 +26,3 @@ public class TestAccessRule {
 		}
 	}
 }
-
-/*
- * result: BaseCloudFlareResponse(successful=true, errors=[], messages=[],
- * result={ modified_on:string = 2018-07-26T10:21:14.550154544Z, mode:string =
- * block, paused:boolean = false, notes:string = , configuration:puobject = {
- * value:string = 139.99.122.129, target:string = ip }, created_on:string =
- * 2018-07-26T10:21:14.550154544Z, scope:puobject = { name:string = bin.club,
- * id:string = d1f8a0f3ba8a88647118e5d1c6a0a6e4, type:string = zone },
- * allowed_modes:puarray = [whitelist, block, challenge, js_challenge],
- * id:string = b72f0d1790d649acadcdde3f3d73641f })
- */
