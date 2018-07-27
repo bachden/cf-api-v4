@@ -1,6 +1,7 @@
 package nhb.cf.api.v4.message.firewall;
 
-import com.nhb.common.data.PuObject;
+import com.nhb.common.data.PuElement;
+import com.nhb.common.data.PuObjectRO;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -13,9 +14,9 @@ public class DeleteZoneAccessRuleResponse extends BaseCloudFlareResponse {
 	private String identifier;
 
 	@Override
-	protected void onResult(PuObject result) {
-		if (result != null) {
-			this.identifier = result.getString("id", null);
+	protected void onResult(PuElement result) {
+		if (result != null && result instanceof PuObjectRO) {
+			this.identifier = ((PuObjectRO) result).getString("id", null);
 		}
 	}
 }

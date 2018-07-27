@@ -10,5 +10,9 @@ public interface CloudFlareRequest extends CloudFlareMessage {
 
 	Class<? extends CloudFlareResponse> getResponseType();
 
+	default void verify() {
+		// request must implement and throw exceptions on invalid
+	}
+
 	PuObject toPuObject();
 }

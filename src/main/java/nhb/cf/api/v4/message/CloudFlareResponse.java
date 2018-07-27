@@ -2,6 +2,7 @@ package nhb.cf.api.v4.message;
 
 import java.util.List;
 
+import com.nhb.common.data.PuElement;
 import com.nhb.common.data.PuObject;
 import com.nhb.common.data.PuObjectRO;
 
@@ -15,7 +16,7 @@ public interface CloudFlareResponse extends CloudFlareMessage {
 
 	List<PuObject> getMessages();
 
-	PuObject getResult();
+	PuElement getResult();
 
 	@SuppressWarnings("unchecked")
 	default <T extends CloudFlareResponse> T cast() {

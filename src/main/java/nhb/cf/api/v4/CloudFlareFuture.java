@@ -11,6 +11,7 @@ import com.nhb.common.data.PuObjectRO;
 import com.nhb.messaging.http.HttpAsyncFuture;
 import com.nhb.messaging.http.HttpClientHelper;
 
+import lombok.Getter;
 import nhb.cf.api.v4.message.CloudFlareResponse;
 
 public interface CloudFlareFuture extends RPCFuture<CloudFlareResponse> {
@@ -18,11 +19,14 @@ public interface CloudFlareFuture extends RPCFuture<CloudFlareResponse> {
 	static CloudFlareFuture newDefault(HttpAsyncFuture future, Class<? extends CloudFlareResponse> responseType) {
 		return new DefaultCloudFlareFuture(future, responseType);
 	}
+
+	Class<? extends CloudFlareResponse> getResponseType();
 }
 
 class DefaultCloudFlareFuture extends RPCFutureTranslator<HttpResponse, CloudFlareResponse>
 		implements CloudFlareFuture, Loggable {
 
+	@Getter
 	private final Class<? extends CloudFlareResponse> responseType;
 
 	public DefaultCloudFlareFuture(HttpAsyncFuture future, Class<? extends CloudFlareResponse> responseType) {

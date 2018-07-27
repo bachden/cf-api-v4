@@ -1,6 +1,12 @@
 package nhb.cf.api.v4.message;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map.Entry;
+
+import com.nhb.common.data.PuDataType;
 import com.nhb.common.data.PuObject;
+import com.nhb.common.data.PuValue;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,6 +42,18 @@ public abstract class AbstractCloudFlareRequest implements CloudFlareRequest {
 		this.path = meta.path() == null ? "" : meta.path();
 		this.method = meta.method() == null ? "GET" : meta.method();
 		this.responseType = meta.responseType() == null ? BaseCloudFlareResponse.class : meta.responseType();
+	}
+
+	protected void removeNullFields(PuObject data) {
+		List<String> tobeRemoved = new LinkedList<>();
+		for (Entry<String, PuValue> entry : data) {
+			if (entry.getValue().getType() == PuDataType.NULL) {
+				tobeRemoved.add(entry.getKey());
+			}
+		}
+		for (String field : tobeRemoved) {
+			data.remove(field);
+		}
 	}
 
 	@Override

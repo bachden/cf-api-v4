@@ -17,7 +17,7 @@ public class BaseCloudFlareResponse implements CloudFlareResponse {
 	private boolean successful = false;
 	private final List<PuObject> errors = new LinkedList<>();
 	private final List<PuObject> messages = new LinkedList<>();
-	private PuObject result = null;
+	private PuElement result = null;
 
 	private PuElement rawResponse;
 
@@ -25,7 +25,7 @@ public class BaseCloudFlareResponse implements CloudFlareResponse {
 	public final void fromPuObject(PuObjectRO rawResponse) {
 		this.rawResponse = rawResponse;
 		this.successful = rawResponse.getBoolean("success", false);
-		this.result = rawResponse.getPuObject("result", null);
+		this.result = rawResponse.variableExists("result") ? rawResponse.get("result") : null;
 
 		PuArray arr = rawResponse.getPuArray("errors", null);
 		if (arr != null) {
@@ -44,7 +44,7 @@ public class BaseCloudFlareResponse implements CloudFlareResponse {
 		this.onResult(result);
 	}
 
-	protected void onResult(PuObject result) {
+	protected void onResult(PuElement result) {
 
 	}
 

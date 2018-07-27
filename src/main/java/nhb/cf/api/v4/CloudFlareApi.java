@@ -31,6 +31,8 @@ class DefaultCloudFlareAPI implements CloudFlareApi {
 	@Override
 	public CloudFlareFuture send(CloudFlareRequest request) {
 
+		request.verify();
+
 		if (request instanceof ResolvableRequest) {
 			// this invoking should always call first
 			((ResolvableRequest) request).resolve(this.config);

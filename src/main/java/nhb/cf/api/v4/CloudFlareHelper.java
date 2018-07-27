@@ -1,8 +1,10 @@
 package nhb.cf.api.v4;
 
 import lombok.AllArgsConstructor;
+import nhb.cf.api.v4.message.CloudFlareRequest;
 import nhb.cf.api.v4.message.firewall.CreateZoneAccessRuleRequest;
 import nhb.cf.api.v4.message.firewall.DeleteZoneAccessRuleRequest;
+import nhb.cf.api.v4.message.firewall.ListZoneAccessRuleRequest;
 
 @AllArgsConstructor
 public class CloudFlareHelper {
@@ -22,8 +24,12 @@ public class CloudFlareHelper {
 
 	private final CloudFlareApi api;
 
+	public CloudFlareFuture sendRequest(CloudFlareRequest req) {
+		return this.api.send(req);
+	}
+
 	public CloudFlareFuture createZoneAccessRule(String mode, String target, String value, String notes) {
-		return this.api.send(CreateZoneAccessRuleRequest.builder() //
+		return this.sendRequest(CreateZoneAccessRuleRequest.builder() //
 				.mode(mode) //
 				.target(target) //
 				.value(value) //
@@ -40,7 +46,7 @@ public class CloudFlareHelper {
 	}
 
 	public CloudFlareFuture deleteZoneAccessRule(String identifier) {
-		return this.api.send(DeleteZoneAccessRuleRequest.builder() //
+		return this.sendRequest(DeleteZoneAccessRuleRequest.builder() //
 				.identifier(identifier) //
 				.build());
 	}
@@ -54,5 +60,64 @@ public class CloudFlareHelper {
 	 */
 	public CloudFlareFuture unblockAnIp(String blockingId) {
 		return this.deleteZoneAccessRule(blockingId);
+	}
+
+	public CloudFlareFuture listAccessRule(ListZoneAccessRuleRequest req) {
+		return this.sendRequest(req);
+	}
+
+	public CloudFlareFuture listBlockedIps(int page, int pageSize) {
+		return this.listAccessRule(ListZoneAccessRuleRequest.builder() //
+				.mode("block") //
+				.page(page) //
+				.pageSize(pageSize) //
+				.build());
+	}
+
+	public CloudFlareFuture listBlockedIps(int page) {
+		return this.listAccessRule(ListZoneAccessRuleRequest.builder() //
+				.mode("block") //
+				.page(page) //
+				.build());
+	}
+
+	public CloudFlareFuture searchBlockedIpByNotes(String notes, int page, int pageSize) {
+		return this.listAccessRule(ListZoneAccessRuleRequest.builder() //
+				.notes(notes) //
+				.mode("block") //
+				.page(page) //
+				.pageSize(pageSize) //
+				.build());
+	}
+
+	public CloudFlareFuture searchBlockedIpByNotes(String notes, int page) {
+		return this.listAccessRule(ListZoneAccessRuleRequest.builder() //
+				.notes(notes) //
+				.mode("block") //
+				.page(page) //
+				.build());
+	}
+
+	public CloudFlareFuture searchBlockedIp(String ip) {
+		return this.searchBlockedIp(ip, 1);
+	}
+
+	public CloudFlareFuture searchBlockedIp(String ip, int page) {
+		return this.listAccessRule(ListZoneAccessRuleRequest.builder() //
+				.target("ip") //
+				.value(ip) //
+				.mode("block") //
+				.page(page) //
+				.build());
+	}
+
+	public CloudFlareFuture searchBlockedIp(String ip, int page, int pageSize) {
+		return this.listAccessRule(ListZoneAccessRuleRequest.builder() //
+				.target("ip") //
+				.value(ip) //
+				.mode("block") //
+				.page(page) //
+				.pageSize(pageSize) //
+				.build());
 	}
 }
