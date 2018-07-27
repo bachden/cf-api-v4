@@ -23,6 +23,8 @@ public abstract class AbstractCloudFlareRequest implements CloudFlareRequest {
 				clazz = this.getClass();
 			} else if (clazz == AbstractCloudFlareRequest.class) {
 				break;
+			} else {
+				clazz = clazz.getSuperclass();
 			}
 			meta = clazz.getAnnotation(CloudFlareRequestMeta.class);
 		} while (meta == null);
