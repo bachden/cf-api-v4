@@ -11,8 +11,8 @@ public abstract class AbstractCloudFlareRequest implements CloudFlareRequest {
 
 	@Setter(AccessLevel.PROTECTED)
 	private String path;
-	private final String method;
-	private final Class<? extends CloudFlareResponse> responseType;
+	private String method;
+	private Class<? extends CloudFlareResponse> responseType;
 
 	{
 		CloudFlareRequestMeta meta = null;
