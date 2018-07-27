@@ -17,7 +17,7 @@ import nhb.cf.api.v4.message.CloudFlareRequestMeta;
 public class ListZoneAccessRuleRequest extends AbstractResolvableCloudFlareRequest {
 
 	@Builder.Default
-	private String notes = "";
+	private String notes = null;
 
 	@Builder.Default
 	private String mode = null;
